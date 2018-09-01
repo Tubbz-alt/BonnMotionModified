@@ -539,7 +539,7 @@ public class Statistics extends App {
 		String values[][] = new String[radius.length][metrics.length];
 
 		// get temporal dependence
-		double D_temporal = getAverageDegreeOfTemporalDependence(node, s);
+		double D_temporal = getAverageDegreeOfTemporalDependence(node, s, basename);
 
 		// calculate average node speed
 		double averageSpeed = 0;
@@ -788,8 +788,10 @@ public class Statistics extends App {
 	 * @param nodes The mobile nodes in the simulation
 	 * @param s The scenario of the simulation
 	 * @return double of the total temporal dependence
+	 * @throws FileNotFoundException 
 	 * */
-	protected static double getAverageDegreeOfTemporalDependence(MobileNode nodes[], Scenario s) {
+	protected static double getAverageDegreeOfTemporalDependence(MobileNode nodes[], Scenario s, String basename) throws FileNotFoundException {
+		PrintWriter statsAvgDegreeTempDepPerNode = new PrintWriter(new FileOutputStream(basename + ".avgDegreeTempDepPerNode"));
 		double temp[] = new double[2];
 		double D_temporal = 0.0;
 		double D_temporal_count = 0.0;
@@ -797,7 +799,11 @@ public class Statistics extends App {
 			temp = MobileNode.getDegreeOfTemporalDependence(nodes[i], 0.0, s.getDuration(), temporalDependenceC);
 			D_temporal += temp[0];
 			D_temporal_count += temp[1];
+			
+			statsAvgDegreeTempDepPerNode.println(i + " " + temp[0]/temp[1]);
 		}
+		
+		statsAvgDegreeTempDepPerNode.close();
 		return D_temporal / D_temporal_count;
 	}
 
