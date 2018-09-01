@@ -512,6 +512,7 @@ public class Statistics extends App {
 		double duration = s.getDuration();
 		double[][] ls = null;
 		PrintWriter stats = new PrintWriter(new FileOutputStream(basename + ".stats"));
+		PrintWriter statsAvgSpeed = new PrintWriter(new FileOutputStream(basename + ".avgSpeedPerNode"));
 		// check next two lines for ExtendedCatastrophe
 		int tEdges = (node.length * (node.length - 1)) / 2;
 		double normFact = (double)tEdges * duration;
@@ -542,9 +543,23 @@ public class Statistics extends App {
 
 		// calculate average node speed
 		double averageSpeed = 0;
+		double avgSpeedPerNode = 0;
 		for (int i = 0; i < node.length; i++) {
-			averageSpeed += averageSpeed(i, s);
+			//averageSpeed += averageSpeed(i, s);
+			// BRUNO
+			avgSpeedPerNode = averageSpeed(i, s);
+			
+			statsAvgSpeed.println(i+" "+avgSpeedPerNode);
+			
+			if (Double.isNaN(avgSpeedPerNode)) {
+				avgSpeedPerNode = 0;
+			}
+			averageSpeed += avgSpeedPerNode;
+			
+			// BRUNO END
 		}
+		
+		statsAvgSpeed.close();
 		averageSpeed = averageSpeed / node.length;
 
 		for (int k = 0; k < radius.length; k++) {
