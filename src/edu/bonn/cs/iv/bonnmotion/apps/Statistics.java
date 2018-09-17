@@ -539,8 +539,9 @@ public class Statistics extends App {
 		String values[][] = new String[radius.length][metrics.length];
 
 		// get temporal dependence
-		double D_temporal = getAverageDegreeOfTemporalDependence(node, s, basename);
-
+		// BRUNO 
+		//double D_temporal = getAverageDegreeOfTemporalDependence(node, s, basename);
+		// BRUNO END
 		// calculate average node speed
 		double averageSpeed = 0;
 		double avgSpeedPerNode = 0;
@@ -609,8 +610,9 @@ public class Statistics extends App {
 			if (k == 0) {
 				stats.println("# relative mobility = " + (mobility / normFact));
 				stats.println("# average node speed = " + averageSpeed);
-				stats.println("# average degree of temporal dependence = " + D_temporal);
-
+				// BRUNO 
+				//stats.println("# average degree of temporal dependence = " + D_temporal);
+				// BRUNO END
 				stats.println();
 			}
 			double tOld = 0.0;
@@ -791,7 +793,9 @@ public class Statistics extends App {
 	 * @throws FileNotFoundException 
 	 * */
 	protected static double getAverageDegreeOfTemporalDependence(MobileNode nodes[], Scenario s, String basename) throws FileNotFoundException {
+		// BRUNO
 		PrintWriter statsAvgDegreeTempDepPerNode = new PrintWriter(new FileOutputStream(basename + ".avgDegreeTempDepPerNode"));
+		// BRUNO END
 		double temp[] = new double[2];
 		double D_temporal = 0.0;
 		double D_temporal_count = 0.0;
@@ -802,8 +806,9 @@ public class Statistics extends App {
 			
 			statsAvgDegreeTempDepPerNode.println(i + " " + temp[0]/temp[1]);
 		}
-		
+		// BRUNO 
 		statsAvgDegreeTempDepPerNode.close();
+		// BRUNO END
 		return D_temporal / D_temporal_count;
 	}
 
